@@ -28,6 +28,8 @@ public class DownLoadImage extends AsyncTask<String,Void,Bitmap> {
         try {
             URL url = new URL(imageUrl);
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
+            httpConn.setRequestMethod("GET");
+            httpConn.connect();
             in = httpConn.getInputStream();
             bitmap = BitmapFactory.decodeStream(in);
         } catch (IOException e) {

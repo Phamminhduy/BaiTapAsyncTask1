@@ -8,13 +8,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     private ImageView imageView;
-    private TextView txtView;
-    private Button btnimg,btnjson;
+    private Button btnimg;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -37,9 +35,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void AnhXa(){
         imageView = (ImageView) findViewById(R.id.imageView);
-        txtView   = (TextView) findViewById(R.id.textView);
         btnimg    = (Button) findViewById(R.id.buttonDownloand);
-        btnjson   = (Button) findViewById(R.id.buttondownloandJson);
     }
 
     public boolean checkInternetConnection(){
