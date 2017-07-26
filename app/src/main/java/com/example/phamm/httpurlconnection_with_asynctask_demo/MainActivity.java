@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 task.execute(imageUrl);
             }
         });
-
     }
     public void AnhXa(){
         imageView = (ImageView) findViewById(R.id.imageView);

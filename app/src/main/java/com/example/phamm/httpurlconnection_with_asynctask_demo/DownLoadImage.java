@@ -14,8 +14,10 @@ import java.net.URL;
  * Created by phamm on 7/25/2017.
  */
 
-public class DownLoadImage extends AsyncTask<String,Bitmap,Bitmap> {
+public class DownLoadImage extends AsyncTask<String,Void,Bitmap> {
+    MainActivity activity = new MainActivity() ;
     private ImageView imageView;
+    Bitmap bitmap = null;
     public DownLoadImage(ImageView imageView){
         this.imageView = imageView;
     }
@@ -23,7 +25,6 @@ public class DownLoadImage extends AsyncTask<String,Bitmap,Bitmap> {
     protected Bitmap doInBackground(String... strings) {
         String imageUrl = strings[0];
         InputStream in = null;
-        Bitmap bitmap = null;
         try {
             URL url = new URL(imageUrl);
             HttpURLConnection httpConn = (HttpURLConnection) url.openConnection();
@@ -31,25 +32,20 @@ public class DownLoadImage extends AsyncTask<String,Bitmap,Bitmap> {
             httpConn.connect();
             in = httpConn.getInputStream();
             bitmap = BitmapFactory.decodeStream(in);
-            publishProgress(bitmap);
+            updateImage();
         } catch (IOException e) {
             e.printStackTrace();
         }
 
         return bitmap;
     }
-
-    @Override
-    protected void onPostExecute(Bitmap bitmap) {
-        //if(bitmap !=null){
-        //  imageView.setImageBitmap(bitmap);
-        //}else{
-        //  Log.e("MyMessage", "Failed to fetch data!");
-        //}
-    }
-
-    @Override
-    protected void onProgressUpdate(Bitmap... values) {
-        imageView.setImageBitmap(values[0]);
+    private void updateImage(){
+        activity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                imageView.setImageBitmap(bitmap);
+            }
+        });
     }
 }
+
