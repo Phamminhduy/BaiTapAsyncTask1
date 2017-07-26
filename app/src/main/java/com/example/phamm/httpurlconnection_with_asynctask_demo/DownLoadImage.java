@@ -3,7 +3,6 @@ package com.example.phamm.httpurlconnection_with_asynctask_demo;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.widget.ImageView;
 
 import java.io.IOException;
@@ -15,7 +14,7 @@ import java.net.URL;
  * Created by phamm on 7/25/2017.
  */
 
-public class DownLoadImage extends AsyncTask<String,Void,Bitmap> {
+public class DownLoadImage extends AsyncTask<String,Bitmap,Bitmap> {
     private ImageView imageView;
     public DownLoadImage(ImageView imageView){
         this.imageView = imageView;
@@ -32,6 +31,7 @@ public class DownLoadImage extends AsyncTask<String,Void,Bitmap> {
             httpConn.connect();
             in = httpConn.getInputStream();
             bitmap = BitmapFactory.decodeStream(in);
+            publishProgress(bitmap);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -41,10 +41,15 @@ public class DownLoadImage extends AsyncTask<String,Void,Bitmap> {
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
-        if(bitmap !=null){
-            imageView.setImageBitmap(bitmap);
-        }else{
-            Log.e("MyMessage", "Failed to fetch data!");
-        }
+        //if(bitmap !=null){
+        //  imageView.setImageBitmap(bitmap);
+        //}else{
+        //  Log.e("MyMessage", "Failed to fetch data!");
+        //}
+    }
+
+    @Override
+    protected void onProgressUpdate(Bitmap... values) {
+        imageView.setImageBitmap(values[0]);
     }
 }
